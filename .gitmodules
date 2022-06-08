@@ -1,0 +1,15 @@
+[submodule "esphome/esphome-common"]
+	path = esphome/esphome-common
+	url = https://github.com/protohaus/esphome-common.git
+[submodule "esphome/esphome-camera"]
+	path = esphome/esphome-camera
+	url = https://github.com/protohaus/esphome-camera.git
+[submodule "esphome/esphome-pump"]
+	path = esphome/esphome-pump
+	url = https://github.com/protohaus/esphome-pump.git
+[submodule "esphome/esphome-ashydroponicskit"]
+	path = esphome/esphome-ashydroponicskit
+	url = https://github.com/protohaus/esphome-ashydroponicskit.git
+[submodule "esphome/esphome-sensors"]
+	path = esphome/esphome-sensors
+	url = https://github.com/protohaus/esphome-sensors.git
