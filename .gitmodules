@@ -13,3 +13,6 @@
 [submodule "esphome/esphome-sensors"]
 	path = esphome/esphome-sensors
 	url = https://github.com/protohaus/esphome-sensors.git
+[submodule "esphome/custom_components"]
+	path = esphome/custom_components
+	url = https://github.com/protohaus/esphome-customcomponents.git
