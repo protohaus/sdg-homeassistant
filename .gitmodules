@@ -16,3 +16,6 @@
 [submodule "esphome/custom_components"]
 	path = esphome/custom_components
 	url = https://github.com/protohaus/esphome-customcomponents.git
+[submodule "esphome/esphome-sonoff"]
+	path = esphome/esphome-sonoff
+	url = https://github.com/protohaus/esphome-sonoff.git

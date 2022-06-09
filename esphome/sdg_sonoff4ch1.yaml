@@ -1,0 +1,44 @@
+substitutions:
+  #general settings
+  host_name: sdg-sonoff4ch1
+  device_name: sdg_sonoff4ch1
+  device_name_upper: sdg.sonoff4ch1
+  status_led_interval_ok: 10s
+  status_led_interval_booting: 3s
+  settings_log_level: VERBOSE
+  activate_fast_connect: "true"
+  api_reboot_timeout: "2min"
+  
+  #sonoff config
+  sonoff4ch_button_1_pin: GPIO0
+  sonoff4ch_button_2_pin: GPIO9
+  sonoff4ch_button_3_pin: GPIO10
+  sonoff4ch_button_4_pin: GPIO14
+  
+  sonoff4ch_relay_1_pin: GPIO12
+  sonoff4ch_relay_2_pin: GPIO5
+  sonoff4ch_relay_3_pin: GPIO4
+  sonoff4ch_relay_4_pin: GPIO15
+  
+  sonoff4ch_blue_led_pin: GPIO13
+  
+  
+esphome:
+  name: ${host_name}
+
+esp8266:
+  board: esp8285
+
+# Enable logging
+logger:
+  level: DEBUG
+  
+preferences:
+  flash_write_interval: 1min
+  
+packages:
+  common_api: !include /config/esphome/esphome-common/api.yaml
+  common_base: !include /config/esphome/esphome-common/base.yaml
+  common_status: !include /config/esphome/esphome-common/status.yaml
+  common_restart: !include /config/esphome/esphome-common/restart.yaml
+  sonoff_sonoff4ch: !include /config/esphome/esphome-sonoff/sonoff4ch.yaml
