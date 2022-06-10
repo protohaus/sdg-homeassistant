@@ -9,6 +9,8 @@ substitutions:
   activate_fast_connect: "true"
   api_reboot_timeout: "2min"
   
+  api_connection_check_interval: "60s"
+  
   #sonoff config
   sonoff4ch_button_1_pin: GPIO0
   sonoff4ch_button_2_pin: GPIO9
@@ -41,4 +43,5 @@ packages:
   common_base: !include /config/esphome/esphome-common/base.yaml
   common_status: !include /config/esphome/esphome-common/status.yaml
   common_restart: !include /config/esphome/esphome-common/restart.yaml
+  common_boot_finished: !include /config/esphome/esphome-common/boot_finished.yaml
   sonoff_sonoff4ch: !include /config/esphome/esphome-sonoff/sonoff4ch.yaml
