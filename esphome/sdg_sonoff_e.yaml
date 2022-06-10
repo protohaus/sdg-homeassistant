@@ -1,8 +1,8 @@
 substitutions:
   #general settings
-  host_name: sdg-sonoff4ch1
-  device_name: sdg_sonoff4ch1
-  device_name_upper: sdg.sonoff4ch1
+  host_name: sdg-sonoff-e
+  device_name: sdg_sonoff_e
+  device_name_upper: sdg.sonoff.E
   status_led_interval_ok: 10s
   status_led_interval_booting: 3s
   settings_log_level: VERBOSE
