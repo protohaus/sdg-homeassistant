@@ -5,10 +5,10 @@ substitutions:
   device_name_upper: sdg.sonoff.B
   status_led_interval_ok: 10s
   status_led_interval_booting: 3s
-  settings_log_level: VERBOSE
+  settings_log_level: DEBUG
   activate_fast_connect: "true"
-  api_reboot_timeout: "2min"
-  
+  api_reboot_timeout: "15min"
+  settings_flash_write_interval: "2min"
   api_connection_check_interval: "60s"
   
   #sonoff config
@@ -30,17 +30,14 @@ esphome:
 
 esp8266:
   board: esp8285
-
-# Enable logging
-logger:
-  level: DEBUG
-  
-preferences:
-  flash_write_interval: 1min
   
 packages:
   common_api: !include /config/esphome/esphome-common/api.yaml
-  common_base: !include /config/esphome/esphome-common/base.yaml
+  common_captive: !include /config/esphome/esphome-common/captive_portal.yaml
+  common_ota: !include /config/esphome/esphome-common/ota.yaml
+  common_preferences: !include /config/esphome/esphome-common/preferences.yaml
+  common_logger: !include /config/esphome/esphome-common/logger.yaml
+  common_wifi: !include /config/esphome/esphome-common/wifi.yaml
   common_status: !include /config/esphome/esphome-common/status.yaml
   common_restart: !include /config/esphome/esphome-common/restart.yaml
   common_boot_finished: !include /config/esphome/esphome-common/boot_finished.yaml
