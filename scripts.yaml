@@ -1,0 +1,70 @@
+shelly_01_stop:
+  alias: Shelly_01 Stop
+  sequence:
+  - service: script.turn_off
+    data: {}
+    target:
+      entity_id:
+      - script.shelly_01_pumpcycle_5min
+      - script.shelly_01_pumpcycle_2min
+      - script.shelly_01_pumpcycle_10min
+  - type: turn_off
+    device_id: 45ea0a17dc5ac10a5f0537bc1d59d616
+    entity_id: switch.shelly_01
+    domain: switch
+  mode: restart
+  icon: mdi:stop
+shelly_01_pumpcycle_5min:
+  alias: Shelly_01 Pumpcycle 5min
+  sequence:
+  - type: turn_on
+    device_id: 45ea0a17dc5ac10a5f0537bc1d59d616
+    entity_id: switch.shelly_01
+    domain: switch
+  - delay:
+      hours: 0
+      minutes: 5
+      seconds: 0
+      milliseconds: 0
+  - type: turn_off
+    device_id: 45ea0a17dc5ac10a5f0537bc1d59d616
+    entity_id: switch.shelly_01
+    domain: switch
+  mode: single
+  icon: mdi:water-pump
+shelly_01_pumpcycle_2min:
+  alias: Shelly_01 Pumpcycle 2min
+  sequence:
+  - type: turn_on
+    device_id: 45ea0a17dc5ac10a5f0537bc1d59d616
+    entity_id: switch.shelly_01
+    domain: switch
+  - delay:
+      hours: 0
+      minutes: 2
+      seconds: 0
+      milliseconds: 0
+  - type: turn_off
+    device_id: 45ea0a17dc5ac10a5f0537bc1d59d616
+    entity_id: switch.shelly_01
+    domain: switch
+  mode: single
+  icon: mdi:water-pump
+shelly_01_pumpcycle_10min:
+  alias: Shelly_01 Pumpcycle 10min
+  sequence:
+  - type: turn_on
+    device_id: 45ea0a17dc5ac10a5f0537bc1d59d616
+    entity_id: switch.shelly_01
+    domain: switch
+  - delay:
+      hours: 0
+      minutes: 10
+      seconds: 0
+      milliseconds: 0
+  - type: turn_off
+    device_id: 45ea0a17dc5ac10a5f0537bc1d59d616
+    entity_id: switch.shelly_01
+    domain: switch
+  mode: single
+  icon: mdi:water-pump

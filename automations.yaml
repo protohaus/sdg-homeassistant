@@ -24,3 +24,75 @@
           title: Looper {{now().timestamp()|timestamp_local}}
           message: Looper has triggered.
       - delay: 00:00:01
+- id: '1655805520269'
+  alias: Shelly_01 Dayautomation
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - input_boolean.shelly_01_automation
+    from: 'on'
+    to: 'off'
+    id: shelly_01_off
+  - platform: time_pattern
+    minutes: /15
+    id: shelly_01_timetrigger
+  condition: []
+  action:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: shelly_01_timetrigger
+      - condition: sun
+        before: sunset
+        after: sunrise
+      - condition: state
+        entity_id: input_boolean.shelly_01_automation
+        state: 'on'
+      sequence:
+      - service: script.shelly_01_pumpcycle_5min
+        data: {}
+    - conditions:
+      - condition: trigger
+        id: shelly_01_off
+      sequence:
+      - service: script.shelly_01_stop
+        data: {}
+    default: []
+  mode: restart
+- id: '1655819909600'
+  alias: Shelly_01 Nightautomation
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - input_boolean.shelly_01_automation
+    from: 'on'
+    to: 'off'
+    id: shelly_01_off
+  - platform: time_pattern
+    id: shelly_01_timetrigger
+    hours: /1
+  condition: []
+  action:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: shelly_01_timetrigger
+      - condition: sun
+        before: sunrise
+        after: sunset
+      - condition: state
+        entity_id: input_boolean.shelly_01_automation
+        state: 'on'
+      sequence:
+      - service: script.shelly_01_pumpcycle_5min
+        data: {}
+    - conditions:
+      - condition: trigger
+        id: shelly_01_off
+      sequence:
+      - service: script.shelly_01_stop
+        data: {}
+    default: []
+  mode: restart
