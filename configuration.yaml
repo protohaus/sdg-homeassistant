@@ -43,21 +43,217 @@ influxdb:
 
 # Add sliders control to Home Assistant to set position, speed and velocity of the stepper motor
 input_number:
-  slider1:
-    name: Slider
-    initial: 30
-    min: -20
-    max: 35
-    step: 1
-    
-telegram_bot:
-  - platform: polling
-    api_key: "5326830285:AAEVnGd_oy2pvWxw6_GSXTy1MwsT6SKwIx8"
-    allowed_chat_ids:
-      - 133905357
+
+
+#telegram_bot:
+#  - platform: polling
+#    api_key: "5326830285:AAEVnGd_oy2pvWxw6_GSXTy1MwsT6SKwIx8"
+#    allowed_chat_ids:
+#      - 133905357
 
 # Example configuration.yaml entry for the notifier
-notify:
-  - platform: telegram
-    name: NOTIFIER_NAME
-    chat_id: 133905357
+#notify:
+#  - platform: telegram
+#    name: NOTIFIER_NAME
+#    chat_id: 133905357
+input_boolean:
+  ma_shelly_plug01_is_power_comsuming:
+    name: ma_shelly_plug01_is_power_comsuming
+  
+  ma_shelly_plug02_is_power_comsuming:
+    name: ma_shelly_plug02_is_power_comsuming
+    
+  ma_shelly_plug03_is_power_comsuming:
+    name: ma_shelly_plug03_is_power_comsuming
+    
+  ma_shelly_plug04_is_power_comsuming:
+    name: ma_shelly_plug04_is_power_comsuming
+
+timer:
+  test:
+    duration: "01:30:00"
+  ma_shelly_plug01_timer:
+    duration: "01:30:00"
+  ma_shelly_plug02_timer:
+    duration: "01:30:00"
+  ma_shelly_plug03_timer:
+    duration: "01:30:00"
+  ma_shelly_plug04_timer:
+    duration: "01:30:00"
+  ma_shelly_plug01_notification_timer:
+    duration: "01:15:00"
+  ma_shelly_plug02_notification_timer:
+    duration: "01:15:00"
+  ma_shelly_plug03_notification_timer:
+    duration: "01:15:00"
+  ma_shelly_plug04_notification_timer:
+    duration: "01:15:00"
+    
+input_datetime:
+  ma_shelly_plug01_timer_duration:
+    name: ma_shelly_plug01_timer_duration
+    has_time: true  
+  
+  ma_shelly_plug02_timer_duration:
+    name: ma_shelly_plug02_timer_duration
+    has_time: true  
+  
+  ma_shelly_plug03_timer_duration:
+    name: ma_shelly_plug03_timer_duration
+    has_time: true  
+  
+  ma_shelly_plug04_timer_duration:
+    name: ma_shelly_plug04_timer_duration
+    has_time: true  
+  ma_shelly_plug01_notification_timer_duration:
+    name: ma_shelly_plug01_notification_timer_duration
+    has_time: true  
+  
+  ma_shelly_plug02_notification_timer_duration:
+    name: ma_shelly_plug02_notification_timer_duration
+    has_time: true  
+  
+  ma_shelly_plug03_notification_timer_duration:
+    name: ma_shelly_plug03_notification_timer_duration
+    has_time: true  
+  
+  ma_shelly_plug04_notification_timer_duration:
+    name: ma_shelly_plug04_notification_timer_duration
+    has_time: true  
+      
+    
+sensor:
+#####################
+# Integration Sensors
+#####################
+  - platform: integration
+    source: sensor.ma_shelly_plug01_power
+    unit_prefix: k
+    unit_time: h
+    method: left
+  
+  - platform: integration
+    source: sensor.ma_shelly_plug02_power
+    unit_prefix: k
+    unit_time: h
+    method: left
+    
+  - platform: integration
+    source: sensor.ma_shelly_plug03_power
+    unit_prefix: k
+    unit_time: h
+    method: left
+  
+  - platform: integration
+    source: sensor.ma_shelly_plug04_power
+    unit_prefix: k
+    unit_time: h
+    method: left
+    
+#####################
+# Average Sensors    
+#####################
+  - platform: statistics
+    entity_id: sensor.ma_shelly_plug01_power
+    state_characteristic: average_step
+    sampling_size: 6
+    max_age: 
+      minutes: 2
+    name: ma_shelly_plug01_power_average_step
+  
+  - platform: statistics
+    entity_id: sensor.ma_shelly_plug02_power
+    state_characteristic: average_step
+    sampling_size: 6
+    max_age: 
+      minutes: 2
+    name: ma_shelly_plug02_power_average_step
+  
+  - platform: statistics
+    entity_id: sensor.ma_shelly_plug03_power
+    state_characteristic: average_step
+    sampling_size: 6
+    max_age: 
+      minutes: 2
+    name: ma_shelly_plug03_power_average_step
+  
+  - platform: statistics
+    entity_id: sensor.ma_shelly_plug04_power
+    state_characteristic: average_step
+    sampling_size: 6
+    max_age: 
+      minutes: 2
+    name: ma_shelly_plug04_power_average_step
+
+
+#####################
+# Max Value Sensors    
+#####################   
+  - platform: statistics
+    entity_id: sensor.ma_shelly_plug01_power
+    state_characteristic: value_max
+    sampling_size: 4
+    max_age: 
+      minutes: 2
+    name: ma_shelly_plug01_power_value_max
+  
+  - platform: statistics
+    entity_id: sensor.ma_shelly_plug02_power
+    state_characteristic: value_max
+    sampling_size: 4
+    max_age: 
+      minutes: 2
+    name: ma_shelly_plug02_power_value_max
+  
+  - platform: statistics
+    entity_id: sensor.ma_shelly_plug03_power
+    state_characteristic: value_max
+    sampling_size: 4
+    max_age: 
+      minutes: 2
+    name: ma_shelly_plug03_power_value_max
+  
+  - platform: statistics
+    entity_id: sensor.ma_shelly_plug04_power
+    state_characteristic: value_max
+    sampling_size: 4
+    max_age: 
+      minutes: 2
+    name: ma_shelly_plug04_power_value_max
+
+#####################
+# Min Value Sensors    
+#####################    
+  - platform: statistics
+    entity_id: sensor.ma_shelly_plug01_power
+    state_characteristic: value_min
+    sampling_size: 4
+    max_age: 
+      minutes: 2
+    name: ma_shelly_plug01_power_value_min
+  
+  - platform: statistics
+    entity_id: sensor.ma_shelly_plug02_power
+    state_characteristic: value_min
+    sampling_size: 4
+    max_age: 
+      minutes: 2
+    name: ma_shelly_plug02_power_value_min
+  
+  - platform: statistics
+    entity_id: sensor.ma_shelly_plug03_power
+    state_characteristic: value_min
+    sampling_size: 4
+    max_age: 
+      minutes: 2
+    name: ma_shelly_plug03_power_value_min
+  
+  - platform: statistics
+    entity_id: sensor.ma_shelly_plug04_power
+    state_characteristic: value_min
+    sampling_size: 4
+    max_age: 
+      minutes: 2
+    name: ma_shelly_plug04_power_value_min   
+    
+    

@@ -1,70 +1,199 @@
-shelly_01_stop:
-  alias: Shelly_01 Stop
+ma_shelly_plug01_timer_start:
+  alias: ma_shelly_plug01_timer_start
   sequence:
-  - service: script.turn_off
-    data: {}
-    target:
-      entity_id:
-      - script.shelly_01_pumpcycle_5min
-      - script.shelly_01_pumpcycle_2min
-      - script.shelly_01_pumpcycle_10min
-  - type: turn_off
-    device_id: 45ea0a17dc5ac10a5f0537bc1d59d616
-    entity_id: switch.shelly_01
-    domain: switch
-  mode: restart
-  icon: mdi:stop
-shelly_01_pumpcycle_5min:
-  alias: Shelly_01 Pumpcycle 5min
-  sequence:
-  - type: turn_on
-    device_id: 45ea0a17dc5ac10a5f0537bc1d59d616
-    entity_id: switch.shelly_01
-    domain: switch
-  - delay:
-      hours: 0
-      minutes: 5
-      seconds: 0
-      milliseconds: 0
-  - type: turn_off
-    device_id: 45ea0a17dc5ac10a5f0537bc1d59d616
-    entity_id: switch.shelly_01
-    domain: switch
+  - service: timer.start
+    data:
+      entity_id: timer.ma_shelly_plug01_timer
+      duration: '{{states(''input_datetime.ma_shelly_plug01_timer_duration'')}}'
   mode: single
-  icon: mdi:water-pump
-shelly_01_pumpcycle_2min:
-  alias: Shelly_01 Pumpcycle 2min
+  
+ma_shelly_plug01_timer_cancel:
+  alias: ma_shelly_plug01_timer_cancel
   sequence:
-  - type: turn_on
-    device_id: 45ea0a17dc5ac10a5f0537bc1d59d616
-    entity_id: switch.shelly_01
-    domain: switch
-  - delay:
-      hours: 0
-      minutes: 2
-      seconds: 0
-      milliseconds: 0
-  - type: turn_off
-    device_id: 45ea0a17dc5ac10a5f0537bc1d59d616
-    entity_id: switch.shelly_01
-    domain: switch
+  - service: timer.cancel
+    data:
+      entity_id: timer.ma_shelly_plug01_timer
   mode: single
-  icon: mdi:water-pump
-shelly_01_pumpcycle_10min:
-  alias: Shelly_01 Pumpcycle 10min
+
+ma_shelly_plug02_timer_start:
+  alias: ma_shelly_plug02_timer_start
   sequence:
-  - type: turn_on
-    device_id: 45ea0a17dc5ac10a5f0537bc1d59d616
-    entity_id: switch.shelly_01
-    domain: switch
-  - delay:
-      hours: 0
-      minutes: 10
-      seconds: 0
-      milliseconds: 0
-  - type: turn_off
-    device_id: 45ea0a17dc5ac10a5f0537bc1d59d616
-    entity_id: switch.shelly_01
-    domain: switch
+  - service: timer.start
+    data:
+      entity_id: timer.ma_shelly_plug02_timer
+      duration: '{{states(''input_datetime.ma_shelly_plug02_timer_duration'')}}'
   mode: single
-  icon: mdi:water-pump
+
+ma_shelly_plug02_timer_cancel:
+  alias: ma_shelly_plug02_timer_cancel
+  sequence:
+  - service: timer.cancel
+    data:
+      entity_id: timer.ma_shelly_plug02_timer
+  mode: single
+  
+ma_shelly_plug03_timer_start:
+  alias: ma_shelly_plug03_timer_start
+  sequence:
+  - service: timer.start
+    data:
+      entity_id: timer.ma_shelly_plug03_timer
+      duration: '{{states(''input_datetime.ma_shelly_plug03_timer_duration'')}}'
+  mode: single
+
+ma_shelly_plug03_timer_cancel:
+  alias: ma_shelly_plug03_timer_cancel
+  sequence:
+  - service: timer.cancel
+    data:
+      entity_id: timer.ma_shelly_plug03_timer
+  mode: single
+  
+ma_shelly_plug04_timer_start:
+  alias: ma_shelly_plug04_timer_start
+  sequence:
+  - service: timer.start
+    data:
+      entity_id: timer.ma_shelly_plug04_timer
+      duration: '{{states(''input_datetime.ma_shelly_plug04_timer_duration'')}}'
+  mode: single
+
+ma_shelly_plug04_timer_cancel:
+  alias: ma_shelly_plug04_timer_cancel
+  sequence:
+  - service: timer.cancel
+    data:
+      entity_id: timer.ma_shelly_plug04_timer
+  mode: single
+  
+ma_shelly_plug01_notification_timer_start:
+  alias: ma_shelly_plug01_notification_timer_start
+  sequence:
+  - service: timer.start
+    data:
+      entity_id: timer.ma_shelly_plug01_notification_timer
+      duration: '{{states(''input_datetime.ma_shelly_plug01_notification_timer_duration'')}}'
+  mode: single
+  
+ma_shelly_plug01_notification_timer_cancel:
+  alias: ma_shelly_plug01_notification_timer_cancel
+  sequence:
+  - service: timer.cancel
+    data:
+      entity_id: timer.ma_shelly_plug01_notification_timer
+  mode: single
+  
+ma_shelly_plug01_notification_timer_pause:
+  alias: ma_shelly_plug01_notification_timer_pause
+  sequence:
+  - service: timer.pause
+    data:
+      entity_id: timer.ma_shelly_plug01_notification_timer
+  mode: single
+
+ma_shelly_plug01_notification_timer_finish:
+  alias: ma_shelly_plug01_notification_timer_finish
+  sequence:
+  - service: timer.finish
+    data:
+      entity_id: timer.ma_shelly_plug01_notification_timer
+  mode: single
+  
+ma_shelly_plug02_notification_timer_start:
+  alias: ma_shelly_plug02_notification_timer_start
+  sequence:
+  - service: timer.start
+    data:
+      entity_id: timer.ma_shelly_plug02_notification_timer
+      duration: '{{states(''input_datetime.ma_shelly_plug02_notification_timer_duration'')}}'
+  mode: single
+
+ma_shelly_plug02_notification_timer_cancel:
+  alias: ma_shelly_plug02_notification_timer_cancel
+  sequence:
+  - service: timer.cancel
+    data:
+      entity_id: timer.ma_shelly_plug02_notification_timer
+  mode: single
+  
+ma_shelly_plug02_notification_timer_pause:
+  alias: ma_shelly_plug02_notification_timer_pause
+  sequence:
+  - service: timer.pause
+    data:
+      entity_id: timer.ma_shelly_plug02_notification_timer
+  mode: single
+
+ma_shelly_plug02_notification_timer_finish:
+  alias: ma_shelly_plug02_notification_timer_finish
+  sequence:
+  - service: timer.finish
+    data:
+      entity_id: timer.ma_shelly_plug02_notification_timer
+  mode: single
+  
+ma_shelly_plug03_notification_timer_start:
+  alias: ma_shelly_plug03_notification_timer_start
+  sequence:
+  - service: timer.start
+    data:
+      entity_id: timer.ma_shelly_plug03_notification_timer
+      duration: '{{states(''input_datetime.ma_shelly_plug03_notification_timer_duration'')}}'
+  mode: single
+  
+ma_shelly_plug03_notification_timer_cancel:
+  alias: ma_shelly_plug03_notification_timer_cancel
+  sequence:
+  - service: timer.cancel
+    data:
+      entity_id: timer.ma_shelly_plug03_notification_timer
+  mode: single
+  
+ma_shelly_plug03_notification_timer_pause:
+  alias: ma_shelly_plug03_notification_timer_pause
+  sequence:
+  - service: timer.pause
+    data:
+      entity_id: timer.ma_shelly_plug03_notification_timer
+  mode: single
+
+ma_shelly_plug03_notification_timer_finish:
+  alias: ma_shelly_plug03_notification_timer_finish
+  sequence:
+  - service: timer.finish
+    data:
+      entity_id: timer.ma_shelly_plug03_notification_timer
+  mode: single
+  
+ma_shelly_plug04_notification_timer_start:
+  alias: ma_shelly_plug04_notification_timer_start
+  sequence:
+  - service: timer.start
+    data:
+      entity_id: timer.ma_shelly_plug04_notification_timer
+      duration: '{{states(''input_datetime.ma_shelly_plug04_notification_timer_duration'')}}'
+  mode: single
+
+ma_shelly_plug04_notification_timer_cancel:
+  alias: ma_shelly_plug04_notification_timer_cancel
+  sequence:
+  - service: timer.cancel
+    data:
+      entity_id: timer.ma_shelly_plug04_notification_timer
+  mode: single
+  
+ma_shelly_plug04_notification_timer_pause:
+  alias: ma_shelly_plug04_notification_timer_pause
+  sequence:
+  - service: timer.pause
+    data:
+      entity_id: timer.ma_shelly_plug04_notification_timer
+  mode: single
+
+ma_shelly_plug04_notification_timer_finish:
+  alias: ma_shelly_plug04_notification_timer_finish
+  sequence:
+  - service: timer.finish
+    data:
+      entity_id: timer.ma_shelly_plug04_notification_timer
+  mode: single
