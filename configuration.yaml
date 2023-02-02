@@ -41,9 +41,49 @@ influxdb:
       - input_number
       - button
 
+input_text:
+  ma_mushroomart_state:
+    name: ma_mushroomart_state
+    initial: State 5
+    
 # Add sliders control to Home Assistant to set position, speed and velocity of the stepper motor
 input_number:
-
+  ma_biolab_mushroomart_delay_01:
+    name: ma_biolab_mushroomart_delay_01
+    initial: 80
+    min: 0
+    max: 99999
+    step: 1
+    mode: box
+  ma_biolab_mushroomart_delay_02:
+    name: ma_biolab_mushroomart_delay_02
+    initial: 80
+    min: 0
+    max: 99999
+    step: 1
+    mode: box
+  ma_biolab_mushroomart_delay_03:
+    name: ma_biolab_mushroomart_delay_03
+    initial: 180
+    min: 0
+    max: 99999
+    step: 1
+    mode: box
+  ma_biolab_mushroomart_delay_04:
+    name: ma_biolab_mushroomart_delay_04
+    initial: 120
+    min: 0
+    max: 99999
+    step: 1
+    mode: box
+  ma_biolab_mushroomart_delay_05:
+    name: ma_biolab_mushroomart_delay_05
+    initial: 120
+    min: 0
+    max: 99999
+    step: 1
+    mode: box
+   
 
 #telegram_bot:
 #  - platform: polling
@@ -68,6 +108,9 @@ input_boolean:
     
   ma_shelly_plug04_is_power_comsuming:
     name: ma_shelly_plug04_is_power_comsuming
+    
+  ma_biolab_mushroomart_automation_active:
+    name: ma_biolab_mushroomart_automation_active
 
 timer:
   test:

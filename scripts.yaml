@@ -6,7 +6,6 @@ ma_shelly_plug01_timer_start:
       entity_id: timer.ma_shelly_plug01_timer
       duration: '{{states(''input_datetime.ma_shelly_plug01_timer_duration'')}}'
   mode: single
-  
 ma_shelly_plug01_timer_cancel:
   alias: ma_shelly_plug01_timer_cancel
   sequence:
@@ -14,7 +13,6 @@ ma_shelly_plug01_timer_cancel:
     data:
       entity_id: timer.ma_shelly_plug01_timer
   mode: single
-
 ma_shelly_plug02_timer_start:
   alias: ma_shelly_plug02_timer_start
   sequence:
@@ -23,7 +21,6 @@ ma_shelly_plug02_timer_start:
       entity_id: timer.ma_shelly_plug02_timer
       duration: '{{states(''input_datetime.ma_shelly_plug02_timer_duration'')}}'
   mode: single
-
 ma_shelly_plug02_timer_cancel:
   alias: ma_shelly_plug02_timer_cancel
   sequence:
@@ -31,7 +28,6 @@ ma_shelly_plug02_timer_cancel:
     data:
       entity_id: timer.ma_shelly_plug02_timer
   mode: single
-  
 ma_shelly_plug03_timer_start:
   alias: ma_shelly_plug03_timer_start
   sequence:
@@ -40,7 +36,6 @@ ma_shelly_plug03_timer_start:
       entity_id: timer.ma_shelly_plug03_timer
       duration: '{{states(''input_datetime.ma_shelly_plug03_timer_duration'')}}'
   mode: single
-
 ma_shelly_plug03_timer_cancel:
   alias: ma_shelly_plug03_timer_cancel
   sequence:
@@ -48,7 +43,6 @@ ma_shelly_plug03_timer_cancel:
     data:
       entity_id: timer.ma_shelly_plug03_timer
   mode: single
-  
 ma_shelly_plug04_timer_start:
   alias: ma_shelly_plug04_timer_start
   sequence:
@@ -57,7 +51,6 @@ ma_shelly_plug04_timer_start:
       entity_id: timer.ma_shelly_plug04_timer
       duration: '{{states(''input_datetime.ma_shelly_plug04_timer_duration'')}}'
   mode: single
-
 ma_shelly_plug04_timer_cancel:
   alias: ma_shelly_plug04_timer_cancel
   sequence:
@@ -65,7 +58,6 @@ ma_shelly_plug04_timer_cancel:
     data:
       entity_id: timer.ma_shelly_plug04_timer
   mode: single
-  
 ma_shelly_plug01_notification_timer_start:
   alias: ma_shelly_plug01_notification_timer_start
   sequence:
@@ -74,7 +66,6 @@ ma_shelly_plug01_notification_timer_start:
       entity_id: timer.ma_shelly_plug01_notification_timer
       duration: '{{states(''input_datetime.ma_shelly_plug01_notification_timer_duration'')}}'
   mode: single
-  
 ma_shelly_plug01_notification_timer_cancel:
   alias: ma_shelly_plug01_notification_timer_cancel
   sequence:
@@ -82,7 +73,6 @@ ma_shelly_plug01_notification_timer_cancel:
     data:
       entity_id: timer.ma_shelly_plug01_notification_timer
   mode: single
-  
 ma_shelly_plug01_notification_timer_pause:
   alias: ma_shelly_plug01_notification_timer_pause
   sequence:
@@ -90,7 +80,6 @@ ma_shelly_plug01_notification_timer_pause:
     data:
       entity_id: timer.ma_shelly_plug01_notification_timer
   mode: single
-
 ma_shelly_plug01_notification_timer_finish:
   alias: ma_shelly_plug01_notification_timer_finish
   sequence:
@@ -98,7 +87,6 @@ ma_shelly_plug01_notification_timer_finish:
     data:
       entity_id: timer.ma_shelly_plug01_notification_timer
   mode: single
-  
 ma_shelly_plug02_notification_timer_start:
   alias: ma_shelly_plug02_notification_timer_start
   sequence:
@@ -107,7 +95,6 @@ ma_shelly_plug02_notification_timer_start:
       entity_id: timer.ma_shelly_plug02_notification_timer
       duration: '{{states(''input_datetime.ma_shelly_plug02_notification_timer_duration'')}}'
   mode: single
-
 ma_shelly_plug02_notification_timer_cancel:
   alias: ma_shelly_plug02_notification_timer_cancel
   sequence:
@@ -115,7 +102,6 @@ ma_shelly_plug02_notification_timer_cancel:
     data:
       entity_id: timer.ma_shelly_plug02_notification_timer
   mode: single
-  
 ma_shelly_plug02_notification_timer_pause:
   alias: ma_shelly_plug02_notification_timer_pause
   sequence:
@@ -123,7 +109,6 @@ ma_shelly_plug02_notification_timer_pause:
     data:
       entity_id: timer.ma_shelly_plug02_notification_timer
   mode: single
-
 ma_shelly_plug02_notification_timer_finish:
   alias: ma_shelly_plug02_notification_timer_finish
   sequence:
@@ -131,7 +116,6 @@ ma_shelly_plug02_notification_timer_finish:
     data:
       entity_id: timer.ma_shelly_plug02_notification_timer
   mode: single
-  
 ma_shelly_plug03_notification_timer_start:
   alias: ma_shelly_plug03_notification_timer_start
   sequence:
@@ -140,7 +124,6 @@ ma_shelly_plug03_notification_timer_start:
       entity_id: timer.ma_shelly_plug03_notification_timer
       duration: '{{states(''input_datetime.ma_shelly_plug03_notification_timer_duration'')}}'
   mode: single
-  
 ma_shelly_plug03_notification_timer_cancel:
   alias: ma_shelly_plug03_notification_timer_cancel
   sequence:
@@ -148,7 +131,6 @@ ma_shelly_plug03_notification_timer_cancel:
     data:
       entity_id: timer.ma_shelly_plug03_notification_timer
   mode: single
-  
 ma_shelly_plug03_notification_timer_pause:
   alias: ma_shelly_plug03_notification_timer_pause
   sequence:
@@ -156,7 +138,6 @@ ma_shelly_plug03_notification_timer_pause:
     data:
       entity_id: timer.ma_shelly_plug03_notification_timer
   mode: single
-
 ma_shelly_plug03_notification_timer_finish:
   alias: ma_shelly_plug03_notification_timer_finish
   sequence:
@@ -164,7 +145,6 @@ ma_shelly_plug03_notification_timer_finish:
     data:
       entity_id: timer.ma_shelly_plug03_notification_timer
   mode: single
-  
 ma_shelly_plug04_notification_timer_start:
   alias: ma_shelly_plug04_notification_timer_start
   sequence:
@@ -173,7 +153,6 @@ ma_shelly_plug04_notification_timer_start:
       entity_id: timer.ma_shelly_plug04_notification_timer
       duration: '{{states(''input_datetime.ma_shelly_plug04_notification_timer_duration'')}}'
   mode: single
-
 ma_shelly_plug04_notification_timer_cancel:
   alias: ma_shelly_plug04_notification_timer_cancel
   sequence:
@@ -181,7 +160,6 @@ ma_shelly_plug04_notification_timer_cancel:
     data:
       entity_id: timer.ma_shelly_plug04_notification_timer
   mode: single
-  
 ma_shelly_plug04_notification_timer_pause:
   alias: ma_shelly_plug04_notification_timer_pause
   sequence:
@@ -189,7 +167,6 @@ ma_shelly_plug04_notification_timer_pause:
     data:
       entity_id: timer.ma_shelly_plug04_notification_timer
   mode: single
-
 ma_shelly_plug04_notification_timer_finish:
   alias: ma_shelly_plug04_notification_timer_finish
   sequence:
@@ -197,3 +174,127 @@ ma_shelly_plug04_notification_timer_finish:
     data:
       entity_id: timer.ma_shelly_plug04_notification_timer
   mode: single
+ma_mushroomart_automation:
+  alias: ma_mushroomart_script
+  sequence:
+  - service: scene.turn_on
+    data: {}
+    target:
+      entity_id: scene.ma_mushroomart_state_01
+  - delay: '{{ states(''input_number.ma_biolab_mushroomart_delay_01'') | multiply(1)
+      | int }}'
+  - service: scene.turn_on
+    data: {}
+    target:
+      entity_id: scene.ma_mushroomart_state_02
+  - delay: '{{ states(''input_number.ma_biolab_mushroomart_delay_02'') | multiply(1)
+      | int }}'
+  - service: scene.turn_on
+    data: {}
+    target:
+      entity_id: scene.ma_mushroomart_state_03
+  - delay: '{{ states(''input_number.ma_biolab_mushroomart_delay_03'') | multiply(1)
+      | int }}'
+  - service: scene.turn_on
+    data: {}
+    target:
+      entity_id: scene.ma_mushroomart_state_03_duplicate
+  - delay: '{{ states(''input_number.ma_biolab_mushroomart_delay_04'') | multiply(1)
+      | int }}'
+  - service: scene.turn_on
+    data: {}
+    target:
+      entity_id: scene.ma_mushroomart_state_05
+  - delay: '{{ states(''input_number.ma_biolab_mushroomart_delay_05'') | multiply(1)
+      | int }}'
+  mode: restart
+  icon: mdi:mushroom
+ma_mushroomart_state_transition_script:
+  alias: ma_mushroomart_transition_script
+  sequence:
+  - if:
+    - condition: state
+      entity_id: input_text.ma_mushroomart_state
+      state: State 1
+    then:
+    - service: scene.turn_on
+      target:
+        entity_id: scene.ma_mushroomart_state_01
+      metadata: {}
+    - delay: '{{ states(''input_number.ma_biolab_mushroomart_delay_01'') | multiply(1)
+        | int }}'
+    - service: scene.turn_on
+      target:
+        entity_id: scene.ma_mushroomart_state_02
+      metadata: {}
+    else:
+    - if:
+      - condition: state
+        entity_id: input_text.ma_mushroomart_state
+        state: State 2
+      then:
+      - service: scene.turn_on
+        target:
+          entity_id: scene.ma_mushroomart_state_02
+        metadata: {}
+      - delay: '{{ states(''input_number.ma_biolab_mushroomart_delay_02'') | multiply(1)
+          | int }}'
+      - service: scene.turn_on
+        target:
+          entity_id: scene.ma_mushroomart_state_03
+        metadata: {}
+      else:
+      - if:
+        - condition: state
+          entity_id: input_text.ma_mushroomart_state
+          state: State 3
+        then:
+        - service: scene.turn_on
+          target:
+            entity_id: scene.ma_mushroomart_state_03
+          metadata: {}
+        - delay: '{{ states(''input_number.ma_biolab_mushroomart_delay_03'') | multiply(1)
+            | int }}'
+        - service: scene.turn_on
+          target:
+            entity_id: scene.ma_mushroomart_state_03_duplicate
+          metadata: {}
+        else:
+        - if:
+          - condition: state
+            entity_id: input_text.ma_mushroomart_state
+            state: State 4
+          then:
+          - service: scene.turn_on
+            target:
+              entity_id: scene.ma_mushroomart_state_03_duplicate
+            metadata: {}
+          - delay: '{{ states(''input_number.ma_biolab_mushroomart_delay_04'') | multiply(1)
+              | int }}'
+          - service: scene.turn_on
+            target:
+              entity_id: scene.ma_mushroomart_state_05
+            metadata: {}
+          else:
+          - if:
+            - condition: state
+              entity_id: input_text.ma_mushroomart_state
+              state: State 5
+            then:
+            - service: scene.turn_on
+              target:
+                entity_id: scene.ma_mushroomart_state_05
+              metadata: {}
+            - delay: '{{ states(''input_number.ma_biolab_mushroomart_delay_05'') |
+                multiply(1) | int }}'
+            - service: scene.turn_on
+              target:
+                entity_id: scene.ma_mushroomart_state_01
+              metadata: {}
+            else:
+            - service: scene.turn_on
+              target:
+                entity_id: scene.ma_mushroomart_state_05
+              metadata: {}
+  mode: restart
+  icon: mdi:mushroom

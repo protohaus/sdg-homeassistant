@@ -1,0 +1,150 @@
+- id: '1675272318354'
+  name: ma_mushroomart_state_01
+  entities:
+    switch.ma_shelly_plug01:
+      friendly_name: ma-shelly-plug01
+      state: 'on'
+    switch.ma_shelly_plug02:
+      friendly_name: ma-shelly-plug02
+      state: 'off'
+    switch.ma_shelly_plug03:
+      friendly_name: ma-shelly-plug03
+      state: 'off'
+    input_text.ma_mushroomart_state:
+      editable: false
+      min: 0
+      max: 100
+      pattern:
+      mode: text
+      friendly_name: ma_mushroomart_state
+      state: State 1
+  icon: mdi:numeric-1-circle
+  metadata:
+    switch.ma_shelly_plug01:
+      entity_only: true
+    switch.ma_shelly_plug02:
+      entity_only: true
+    switch.ma_shelly_plug03:
+      entity_only: true
+    input_text.ma_mushroomart_state:
+      entity_only: true
+- id: '1675272434583'
+  name: ma_mushroomart_state_02
+  entities:
+    switch.ma_shelly_plug01:
+      friendly_name: ma-shelly-plug01
+      state: 'on'
+    switch.ma_shelly_plug02:
+      friendly_name: ma-shelly-plug02
+      state: 'on'
+    switch.ma_shelly_plug03:
+      friendly_name: ma-shelly-plug03
+      state: 'off'
+    input_text.ma_mushroomart_state:
+      editable: false
+      min: 0
+      max: 100
+      pattern:
+      mode: text
+      friendly_name: ma_mushroomart_state
+      state: State 2
+  icon: mdi:numeric-2-circle
+  metadata:
+    switch.ma_shelly_plug01:
+      entity_only: true
+    switch.ma_shelly_plug02:
+      entity_only: true
+    switch.ma_shelly_plug03:
+      entity_only: true
+    input_text.ma_mushroomart_state:
+      entity_only: true
+- id: '1675272447005'
+  name: ma_mushroomart_state_03
+  entities:
+    switch.ma_shelly_plug01:
+      friendly_name: ma-shelly-plug01
+      state: 'off'
+    switch.ma_shelly_plug02:
+      friendly_name: ma-shelly-plug02
+      state: 'off'
+    switch.ma_shelly_plug03:
+      friendly_name: ma-shelly-plug03
+      state: 'off'
+    input_text.ma_mushroomart_state:
+      editable: false
+      min: 0
+      max: 100
+      pattern:
+      mode: text
+      friendly_name: ma_mushroomart_state
+      state: State 3
+  icon: mdi:numeric-3-circle
+  metadata:
+    switch.ma_shelly_plug01:
+      entity_only: true
+    switch.ma_shelly_plug02:
+      entity_only: true
+    switch.ma_shelly_plug03:
+      entity_only: true
+    input_text.ma_mushroomart_state:
+      entity_only: true
+- id: '1675272460441'
+  name: ma_mushroomart_state_04
+  entities:
+    switch.ma_shelly_plug01:
+      friendly_name: ma-shelly-plug01
+      state: 'on'
+    switch.ma_shelly_plug02:
+      friendly_name: ma-shelly-plug02
+      state: 'off'
+    switch.ma_shelly_plug03:
+      friendly_name: ma-shelly-plug03
+      state: 'on'
+    input_text.ma_mushroomart_state:
+      editable: false
+      min: 0
+      max: 100
+      pattern:
+      mode: text
+      friendly_name: ma_mushroomart_state
+      state: State 4
+  icon: mdi:numeric-4-circle
+  metadata:
+    switch.ma_shelly_plug01:
+      entity_only: true
+    switch.ma_shelly_plug02:
+      entity_only: true
+    switch.ma_shelly_plug03:
+      entity_only: true
+    input_text.ma_mushroomart_state:
+      entity_only: true
+- id: '1675272512235'
+  name: ma_mushroomart_state_05
+  entities:
+    switch.ma_shelly_plug01:
+      friendly_name: ma-shelly-plug01
+      state: 'off'
+    switch.ma_shelly_plug02:
+      friendly_name: ma-shelly-plug02
+      state: 'off'
+    switch.ma_shelly_plug03:
+      friendly_name: ma-shelly-plug03
+      state: 'off'
+    input_text.ma_mushroomart_state:
+      editable: false
+      min: 0
+      max: 100
+      pattern:
+      mode: text
+      friendly_name: ma_mushroomart_state
+      state: State 5
+  icon: mdi:numeric-5-circle
+  metadata:
+    switch.ma_shelly_plug01:
+      entity_only: true
+    switch.ma_shelly_plug02:
+      entity_only: true
+    switch.ma_shelly_plug03:
+      entity_only: true
+    input_text.ma_mushroomart_state:
+      entity_only: true

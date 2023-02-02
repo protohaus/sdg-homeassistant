@@ -14,14 +14,120 @@
 
       '
   mode: single
-- id: '1674733215050'
-  alias: timer_ma_shelly_plug01
+- id: '1675273722194'
+  alias: ma_mushroomart_automation
   description: ''
   trigger:
   - platform: state
     entity_id:
-    - timer.ma_shelly_plug01_timer
-    to: finished
+    - input_boolean.ma_biolab_mushroomart_automation_active
+    id: value_changed
+  - platform: time_pattern
+    seconds: /5
+    id: time_pattern
+  - platform: state
+    entity_id:
+    - input_number.ma_biolab_mushroomart_delay_01
+    id: value_changed
+  - platform: state
+    entity_id:
+    - input_number.ma_biolab_mushroomart_delay_02
+    id: value_changed
+  - platform: state
+    entity_id:
+    - input_number.ma_biolab_mushroomart_delay_03
+    id: value_changed
+  - platform: state
+    entity_id:
+    - input_number.ma_biolab_mushroomart_delay_04
+    id: value_changed
+  - platform: state
+    entity_id:
+    - input_number.ma_biolab_mushroomart_delay_05
+    id: value_changed
+  - platform: state
+    entity_id:
+    - script.ma_mushroomart_state_transition_script
+    from: 'on'
+    to: 'off'
+    id: time_pattern
   condition: []
-  action: []
+  action:
+  - choose:
+    - conditions:
+      - condition: state
+        entity_id: input_boolean.ma_biolab_mushroomart_automation_active
+        state: 'on'
+      - condition: trigger
+        id: time_pattern
+      - condition: state
+        entity_id: script.ma_mushroomart_state_transition_script
+        state: 'off'
+      sequence:
+      - service: script.turn_on
+        data: {}
+        target:
+          entity_id: script.ma_mushroomart_state_transition_script
+    - conditions:
+      - condition: trigger
+        id: value_changed
+      - condition: state
+        entity_id: script.ma_mushroomart_state_transition_script
+        state: 'off'
+      sequence:
+      - service: script.turn_off
+        data: {}
+        target:
+          entity_id: script.ma_mushroomart_state_transition_script
+      - service: scene.turn_on
+        data: {}
+        target:
+          entity_id: scene.ma_mushroomart_state_05
+    - conditions:
+      - condition: trigger
+        id: value_changed
+      - condition: state
+        entity_id: input_boolean.ma_biolab_mushroomart_automation_active
+        state: 'on'
+      - condition: state
+        entity_id: script.ma_mushroomart_state_transition_script
+        state: 'on'
+      sequence:
+      - service: script.turn_off
+        data: {}
+        target:
+          entity_id: script.ma_mushroomart_state_transition_script
+      - service: script.turn_on
+        data: {}
+        target:
+          entity_id: script.ma_mushroomart_state_transition_script
+    - conditions:
+      - condition: trigger
+        id: value_changed
+      - condition: state
+        entity_id: input_boolean.ma_biolab_mushroomart_automation_active
+        state: 'on'
+      - condition: state
+        entity_id: script.ma_mushroomart_state_transition_script
+        state: 'off'
+      sequence:
+      - service: script.turn_on
+        data: {}
+        target:
+          entity_id: script.ma_mushroomart_state_transition_script
+  mode: restart
+- id: '1675331714015'
+  alias: ma_hydrobag_pump_watchdog
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - binary_sensor.ma_shelly_flood01_flood
+    to: 'on'
+  condition: []
+  action:
+  - service: switch.turn_off
+    data: {}
+    target:
+      entity_id: switch.ma_shelly_plug04
   mode: single
