@@ -1,0 +1,125 @@
+substitutions:
+  #general settings
+  host_name: hydroponics-controller-03
+  device_name: hydroponics_controller_03
+  device_name_upper: hydroponics.controller.03
+  status_led_interval_ok: 10s
+  status_led_interval_booting: 3s
+  settings_log_level: DEBUG
+  activate_fast_connect: "true"
+  api_reboot_timeout: "2min"
+  
+  #i2c settings
+  i2c_bus_a_name: bus_a
+  i2c_bus_a_sda: "22"
+  i2c_bus_a_scl: "21" 
+  
+  # pump settings
+  pump_1_name: pump_1
+  pump_1_pin: "16"
+  pump_2_name: pump_2
+  pump_2_pin: "17"
+  pump_3_name: pump_3
+  pump_3_pin: "18"
+  
+  #bme280_1 settings
+  bme280_1_name: bme280_1
+  bme280_1_i2c_bus: ${i2c_bus_a_name}
+  bme280_1_oversampling: "16x"
+  bme280_1_adress: "0x76"
+  bme280_1_update_interval: "10s"
+  
+  #Soil moisture Sensor settings
+  capacitive_moisture_1_name: water_level_1
+  capacitive_moisture_1_pin: "34"
+  capacitive_moisture_1_update_interval: "1s"
+  capacitive_moisture_1_calibrate_linear_1: "1.057 -> 0.00"
+  capacitive_moisture_1_calibrate_linear_2: "0.72 -> 100.00"
+  test: "1.057 -> 0.00"
+  
+  #Soil moisture Sensor settings
+  capacitive_moisture_2_name: water_level_2
+  capacitive_moisture_2_pin: "35"
+  capacitive_moisture_2_update_interval: "1s"
+  capacitive_moisture_2_calibrate_linear_1: "1.057 -> 0.00"
+  capacitive_moisture_2_calibrate_linear_2: "0.72 -> 100.00"
+  
+  #Soil moisture Sensor settings
+  capacitive_moisture_3_name: water_level_3
+  capacitive_moisture_3_pin: "32"
+  capacitive_moisture_3_update_interval: "1s"
+  capacitive_moisture_3_calibrate_linear_1: "1.057 -> 0.00"
+  capacitive_moisture_3_calibrate_linear_2: "0.72 -> 100.00"
+  
+esphome:
+  name: ${host_name}
+  platform: ESP32
+  board: esp32dev
+  #includes:
+  #  - /config/esphome/esphome-water_level_sensor/water_level_sensor.h
+
+# Enable logging
+logger:
+  level: DEBUG
+  
+preferences:
+  flash_write_interval: 1min
+
+switch:
+  - platform: gpio
+    pin: ${pump_1_pin}
+    name: "${device_name_upper}.${pump_1_name}"
+    id: ${device_name}_${pump_1_name}
+    restore_mode: ALWAYS_OFF
+  - platform: gpio
+    pin: ${pump_2_pin}
+    name: "${device_name_upper}.${pump_2_name}"
+    id: ${device_name}_${pump_2_name}
+    restore_mode: ALWAYS_OFF
+  - platform: gpio
+    pin: ${pump_3_pin}
+    name: "${device_name_upper}.${pump_3_name}"
+    id: ${device_name}_${pump_3_name}
+    restore_mode: ALWAYS_OFF
+  
+packages:
+  common_api: !include /config/esphome/esphome-common/api.yaml
+  common_base: !include /config/esphome/esphome-common/base.yaml
+  common_status: !include /config/esphome/esphome-common/status.yaml
+  common_restart: !include /config/esphome/esphome-common/restart.yaml
+  common_i2c_bus_a: !include /config/esphome/esphome-common/i2c_bus_a.yaml
+  sensors_bme280_1: !include /config/esphome/esphome-sensors/bme280_1.yaml
+  sensors_capacitive_moisture_1: !include /config/esphome/esphome-sensors/capacitive_soil_moisture_sensor_v12_1.yaml
+  sensors_capacitive_moisture_2: !include /config/esphome/esphome-sensors/capacitive_soil_moisture_sensor_v12_2.yaml
+  sensors_capacitive_moisture_3: !include /config/esphome/esphome-sensors/capacitive_soil_moisture_sensor_v12_3.yaml
+  #water_level_sensor: !include /config/esphome/esphome-water_level_sensor/water_level_sensor.yaml
+  
+########################################################################################################
+########################################################################################################
+########################################################################################################
+
+# Commented out:
+# custom waterlevel sensor has fixed communication with I2C but without dedicated i2c device class
+# -> therefore does not work with multiplex channels because it only has hard coded i2c adresses.
+
+  #- platform: custom
+  #  lambda: |-
+  #    auto my_sensor = new WaterLevelSensor();
+  #    App.register_component(my_sensor);
+  #    return {my_sensor};
+  #
+  #  sensors:
+  #    name: "Water Level Sensor"
+  #    unit_of_measurement: "%"
+  
+#tca9548a:
+#  - address: 0x70
+#    id: multiplex0
+#    i2c_id: ${i2c_bus_a_name}
+#    channels:
+#      - bus_id: multiplex0channel0
+#        channel: 0
+#      - bus_id: multiplex0channel1
+#        channel: 1
+#      - bus_id: multiplex0channel2
+#        channel: 2
