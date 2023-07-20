@@ -1,0 +1,244 @@
+substitutions:
+  #general settings
+  host_name: hydroponics-controller-0104
+  device_name: hydroponics_controller_0104
+  device_name_upper: hydroponics.controller.0104
+  status_led_interval_ok: 10s
+  status_led_interval_booting: 3s
+  settings_log_level: DEBUG
+  activate_fast_connect: "true"
+  api_reboot_timeout: "2min"
+  
+  #i2c settings
+  i2c_bus_a_name: bus_a
+  i2c_bus_a_sda: "22"
+  i2c_bus_a_scl: "21" 
+  
+  # pump settings
+  pump_1_name: pump_1
+  pump_1_pin: "16"
+  pump_2_name: pump_2
+  pump_2_pin: "17"
+  pump_3_name: pump_3
+  pump_3_pin: "18"
+  
+  #bme280_1 settings
+  bme280_1_name: bme280_1
+  bme280_1_i2c_bus: ${i2c_bus_a_name}
+  bme280_1_oversampling: "16x"
+  bme280_1_adress: "0x76"
+  bme280_1_update_interval: "10s"
+  
+  #Soil moisture Sensor settings
+  capacitive_moisture_1_name: water_level_1
+  capacitive_moisture_1_pin: "33"
+  capacitive_moisture_1_update_interval: "1s"
+  capacitive_moisture_1_calibrate_linear_1: "1.057 -> 0.00"
+  capacitive_moisture_1_calibrate_linear_2: "0.72 -> 100.00"
+
+  
+  #Soil moisture Sensor settings
+  capacitive_moisture_2_name: water_level_2
+  capacitive_moisture_2_pin: "35"
+  capacitive_moisture_2_update_interval: "1s"
+  capacitive_moisture_2_calibrate_linear_1: "1.057 -> 0.00"
+  capacitive_moisture_2_calibrate_linear_2: "0.72 -> 100.00"
+  
+  #Soil moisture Sensor settings
+  capacitive_moisture_3_name: water_level_3
+  capacitive_moisture_3_pin: "34"
+  capacitive_moisture_3_update_interval: "1s"
+  capacitive_moisture_3_calibrate_linear_1: "1.057 -> 0.00"
+  capacitive_moisture_3_calibrate_linear_2: "0.72 -> 100.00"
+  
+esphome:
+  name: ${host_name}
+  platform: ESP32
+  board: esp32dev
+
+
+# Preferences
+preferences:
+  flash_write_interval: 1min
+
+# Pump switches to control the relais
+switch:
+  - platform: gpio
+    pin: ${pump_1_pin}
+    name: "${device_name_upper}.${pump_1_name}"
+    id: ${device_name}_${pump_1_name}
+    restore_mode: ALWAYS_OFF
+  - platform: gpio
+    pin: ${pump_2_pin}
+    name: "${device_name_upper}.${pump_2_name}"
+    id: ${device_name}_${pump_2_name}
+    restore_mode: ALWAYS_OFF
+  - platform: gpio
+    pin: ${pump_3_pin}
+    name: "${device_name_upper}.${pump_3_name}"
+    id: ${device_name}_${pump_3_name}
+    restore_mode: ALWAYS_OFF
+
+
+# Enable Home Assistant API
+api:
+  reboot_timeout: ${api_reboot_timeout}
+  password: !secret esphome_api_pw
+
+# enable ota updates
+ota:
+  password: !secret esphome_ota_pw
+
+# Enable logging
+logger:
+  level: ${settings_log_level}
+
+# Wifi settings
+wifi:
+  networks:
+  - ssid: !secret wifi_ap_ssid
+    password: !secret wifi_ap_pw
+    
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "$device_name_upper AP"
+    password: !secret esphome_fallback_ap_pw
+  
+  fast_connect: ${activate_fast_connect}
+
+
+sensor:
+  - platform: wifi_signal
+    name: "${device_name_upper}.wifi_signal"
+    id: ${device_name}_wifi_signal
+    update_interval: 60s
+    
+  # BME Sensor
+  - platform: bme280
+    i2c_id: ${bme280_1_i2c_bus}
+    temperature:
+      name: "${device_name_upper}.${bme280_1_name}.temperature"
+      id: ${device_name}_${bme280_1_name}_temperature
+      oversampling: ${bme280_1_oversampling}
+    pressure:
+      name: "${device_name_upper}.${bme280_1_name}.pressure"
+      id: ${device_name}_${bme280_1_name}_pressure
+    humidity:
+      name: "${device_name_upper}.${bme280_1_name}.humidity"
+      id: ${device_name}_${bme280_1_name}_humidity 
+    address: ${bme280_1_adress}
+    update_interval: ${bme280_1_update_interval}
+  
+  # Waterlevel Sensor 1
+  - platform: adc
+    pin: ${capacitive_moisture_2_pin}
+    name: "${device_name_upper}.${capacitive_moisture_2_name}"
+    id: ${device_name}_${capacitive_moisture_2_name}
+    update_interval: ${capacitive_moisture_2_update_interval}
+    unit_of_measurement: "%"
+    filters:
+    - median:
+        window_size: 7
+        send_every: 4
+        send_first_at: 1
+    - calibrate_linear:
+        - ${capacitive_moisture_2_calibrate_linear_1}
+        - ${capacitive_moisture_2_calibrate_linear_2}
+    - lambda: |-
+       if (x < 0.5){
+            return 0; 
+        }else if (x >=0.5 && x <99.5){
+            return (x);
+        }else if (x >=99.5 && x<120.0){
+            return 100.0;
+        }else{
+            return -100.0;
+        }
+    accuracy_decimals: 2
+  
+  # Waterlevel Sensor 2  
+  - platform: adc
+    pin: ${capacitive_moisture_3_pin}
+    name: "${device_name_upper}.${capacitive_moisture_3_name}"
+    id: ${device_name}_${capacitive_moisture_3_name}
+    update_interval: ${capacitive_moisture_3_update_interval}
+    unit_of_measurement: "%"
+    filters:
+    - median:
+        window_size: 7
+        send_every: 4
+        send_first_at: 1
+    - calibrate_linear:
+        - ${capacitive_moisture_3_calibrate_linear_1}
+        - ${capacitive_moisture_3_calibrate_linear_2}
+    - lambda: |-
+       if (x < 0.5){
+            return 0; 
+        }else if (x >=0.5 && x <99.5){
+            return (x);
+        }else if (x >=99.5 && x<120.0){
+            return 100.0;
+        }else{
+            return -100.0;
+        }
+    accuracy_decimals: 2
+    
+  # Waterlevel Sensor 3  
+  - platform: adc
+    pin: ${capacitive_moisture_1_pin}
+    name: "${device_name_upper}.${capacitive_moisture_1_name}"
+    id: ${device_name}_${capacitive_moisture_1_name}
+    update_interval: ${capacitive_moisture_1_update_interval}
+    unit_of_measurement: "%"
+    filters:
+    - median:
+        window_size: 7
+        send_every: 4
+        send_first_at: 1
+    - calibrate_linear:
+        - ${capacitive_moisture_1_calibrate_linear_1}
+        - ${capacitive_moisture_1_calibrate_linear_2}
+    - lambda: |-
+       if (x < 0.5){
+            return 0; 
+        }else if (x >=0.5 && x <99.5){
+            return (x);
+        }else if (x >=99.5 && x<120.0){
+            return 100.0;
+        }else{
+            return -100.0;
+        }
+    accuracy_decimals: 2
+    
+
+# Example configuration entry
+binary_sensor:
+  - platform: status
+    name: ${device_name_upper}.status
+    id: ${device_name}_status
+
+button:
+  - platform: restart
+    name: ${device_name_upper}.restart
+    id: ${device_name}_restart
+
+i2c:
+  - id: ${i2c_bus_a_name}
+    sda: ${i2c_bus_a_sda}
+    scl: ${i2c_bus_a_scl}
+    scan: true
+
+captive_portal: 
+    
+#packages:
+  #common_api: !include /config/esphome/esphome-common/api.yaml
+  #common_base: !include /config/esphome/esphome-common/base.yaml
+  #common_status: !include /config/esphome/esphome-common/status.yaml
+  #common_restart: !include /config/esphome/esphome-common/restart.yaml
+  #common_i2c_bus_a: !include /config/esphome/esphome-common/i2c_bus_a.yaml
+  #sensors_bme280_1: !include /config/esphome/esphome-sensors/bme280_1.yaml
+  #sensors_capacitive_moisture_1: !include /config/esphome/esphome-sensors/capacitive_soil_moisture_sensor_v12_1.yaml
+  #sensors_capacitive_moisture_2: !include /config/esphome/esphome-sensors/capacitive_soil_moisture_sensor_v12_2.yaml
+  #sensors_capacitive_moisture_3: !include /config/esphome/esphome-sensors/capacitive_soil_moisture_sensor_v12_3.yaml
+  #water_level_sensor: !include /config/esphome/esphome-water_level_sensor/water_level_sensor.yaml
+
