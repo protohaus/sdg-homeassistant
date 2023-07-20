@@ -298,3 +298,19 @@ ma_mushroomart_state_transition_script:
               metadata: {}
   mode: restart
   icon: mdi:mushroom
+ma_hydrobag_pump_sequence:
+  alias: ma_hydrobag_pump_sequence
+  sequence:
+  - service: input_boolean.turn_on
+    data: {}
+    target:
+      entity_id: input_boolean.ma_hydrobag_pump_active
+  - delay: '{{ states(''input_number.ma_hydrobag_pump_time_active'') | multiply(60)
+      | int }}'
+  - service: input_boolean.turn_off
+    data: {}
+    target:
+      entity_id: input_boolean.ma_hydrobag_pump_active
+  - delay: '{{ states(''input_number.ma_hydrobag_pump_time_pause'') | multiply(60)
+      | int }}'
+  mode: single

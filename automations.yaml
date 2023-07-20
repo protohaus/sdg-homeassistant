@@ -21,7 +21,9 @@
   - platform: state
     entity_id:
     - input_boolean.ma_biolab_mushroomart_automation_active
-    id: value_changed
+    id: automation_on
+    from: 'off'
+    to: 'on'
   - platform: time_pattern
     seconds: /5
     id: time_pattern
@@ -51,83 +53,357 @@
     from: 'on'
     to: 'off'
     id: time_pattern
+  - platform: state
+    entity_id:
+    - input_boolean.ma_biolab_mushroomart_automation_active
+    from: 'on'
+    to: 'off'
+    id: automation_off
+  - platform: state
+    entity_id:
+    - schedule.ma_biolab_mushroomart_schedule
+    id: value_changed
   condition: []
   action:
   - choose:
     - conditions:
       - condition: state
+        entity_id: schedule.ma_biolab_mushroomart_schedule
+        state: 'off'
+      - condition: state
         entity_id: input_boolean.ma_biolab_mushroomart_automation_active
         state: 'on'
-      - condition: trigger
-        id: time_pattern
-      - condition: state
-        entity_id: script.ma_mushroomart_state_transition_script
-        state: 'off'
-      sequence:
-      - service: script.turn_on
-        data: {}
-        target:
-          entity_id: script.ma_mushroomart_state_transition_script
-    - conditions:
-      - condition: trigger
-        id: value_changed
-      - condition: state
-        entity_id: script.ma_mushroomart_state_transition_script
-        state: 'off'
       sequence:
       - service: script.turn_off
         data: {}
         target:
           entity_id: script.ma_mushroomart_state_transition_script
       - service: scene.turn_on
-        data: {}
         target:
           entity_id: scene.ma_mushroomart_state_05
+        metadata: {}
     - conditions:
-      - condition: trigger
-        id: value_changed
       - condition: state
-        entity_id: input_boolean.ma_biolab_mushroomart_automation_active
-        state: 'on'
-      - condition: state
-        entity_id: script.ma_mushroomart_state_transition_script
+        entity_id: schedule.ma_biolab_mushroomart_schedule
         state: 'on'
       sequence:
-      - service: script.turn_off
-        data: {}
-        target:
-          entity_id: script.ma_mushroomart_state_transition_script
-      - service: script.turn_on
-        data: {}
-        target:
-          entity_id: script.ma_mushroomart_state_transition_script
-    - conditions:
-      - condition: trigger
-        id: value_changed
-      - condition: state
-        entity_id: input_boolean.ma_biolab_mushroomart_automation_active
-        state: 'on'
-      - condition: state
-        entity_id: script.ma_mushroomart_state_transition_script
-        state: 'off'
-      sequence:
-      - service: script.turn_on
-        data: {}
-        target:
-          entity_id: script.ma_mushroomart_state_transition_script
-  mode: restart
+      - choose:
+        - conditions:
+          - condition: state
+            entity_id: input_boolean.ma_biolab_mushroomart_automation_active
+            state: 'on'
+          - condition: trigger
+            id: time_pattern
+          - condition: state
+            entity_id: script.ma_mushroomart_state_transition_script
+            state: 'off'
+          sequence:
+          - service: script.turn_on
+            data: {}
+            target:
+              entity_id: script.ma_mushroomart_state_transition_script
+        - conditions:
+          - condition: trigger
+            id: automation_off
+          sequence:
+          - service: script.turn_off
+            data: {}
+            target:
+              entity_id: script.ma_mushroomart_state_transition_script
+          - service: scene.turn_on
+            data: {}
+            target:
+              entity_id: scene.ma_mushroomart_state_05
+        - conditions:
+          - condition: trigger
+            id: value_changed
+          - condition: state
+            entity_id: input_boolean.ma_biolab_mushroomart_automation_active
+            state: 'on'
+          - condition: state
+            entity_id: script.ma_mushroomart_state_transition_script
+            state: 'on'
+          sequence:
+          - service: script.turn_off
+            data: {}
+            target:
+              entity_id: script.ma_mushroomart_state_transition_script
+          - service: script.turn_on
+            data: {}
+            target:
+              entity_id: script.ma_mushroomart_state_transition_script
+        - conditions:
+          - condition: trigger
+            id: value_changed
+          - condition: state
+            entity_id: input_boolean.ma_biolab_mushroomart_automation_active
+            state: 'on'
+          - condition: state
+            entity_id: script.ma_mushroomart_state_transition_script
+            state: 'off'
+          sequence:
+          - service: script.turn_on
+            data: {}
+            target:
+              entity_id: script.ma_mushroomart_state_transition_script
+        - conditions:
+          - condition: trigger
+            id: automation_on
+          - condition: state
+            entity_id: script.ma_mushroomart_state_transition_script
+            state: 'off'
+          sequence:
+          - service: script.turn_off
+            data: {}
+            target:
+              entity_id: script.ma_mushroomart_state_transition_script
+          - service: script.turn_on
+            data: {}
+            target:
+              entity_id: script.ma_mushroomart_state_transition_script
+  mode: queued
+  max: 10
 - id: '1675331714015'
   alias: ma_hydrobag_pump_watchdog
   description: ''
   trigger:
-  - platform: state
-    entity_id:
-    - binary_sensor.ma_shelly_flood01_flood
-    to: 'on'
-  condition: []
+  - platform: time_pattern
+    seconds: /10
+  condition:
+  - condition: state
+    entity_id: binary_sensor.ma_shelly_flood01_flood
+    state: 'on'
   action:
+  - service: input_boolean.turn_off
+    data: {}
+    target:
+      entity_id: input_boolean.ma_hydrobag_pump_automation_active
+  - service: script.turn_off
+    data: {}
+    target:
+      entity_id: script.ma_hydrobag_pump_sequence
+  - service: input_boolean.turn_off
+    data: {}
+    target:
+      entity_id: input_boolean.ma_hydrobag_pump_enabled
   - service: switch.turn_off
     data: {}
     target:
       entity_id: switch.ma_shelly_plug04
   mode: single
+- id: '1675418790673'
+  alias: ma_hydrobag_pump_automation
+  description: ''
+  trigger:
+  - platform: time_pattern
+    seconds: /1
+  - platform: state
+    entity_id:
+    - input_boolean.ma_hydrobag_pump_automation_active
+  - platform: state
+    entity_id:
+    - schedule.ma_hydrobag_pump_schedule
+  condition: []
+  action:
+  - if:
+    - condition: state
+      entity_id: input_boolean.ma_hydrobag_pump_automation_active
+      state: 'on'
+    - condition: state
+      entity_id: script.ma_hydrobag_pump_sequence
+      state: 'off'
+    - condition: state
+      entity_id: schedule.ma_hydrobag_pump_schedule
+      state: 'on'
+    then:
+    - service: script.turn_on
+      data: {}
+      target:
+        entity_id: script.ma_hydrobag_pump_sequence
+    else:
+    - if:
+      - condition: or
+        conditions:
+        - condition: state
+          entity_id: input_boolean.ma_hydrobag_pump_automation_active
+          state: 'off'
+        - condition: state
+          entity_id: schedule.ma_hydrobag_pump_schedule
+          state: 'off'
+        - condition: state
+          entity_id: automation.ma_hydrobag_automation
+          state: 'off'
+          enabled: false
+      then:
+      - service: script.turn_off
+        data: {}
+        target:
+          entity_id: script.ma_hydrobag_pump_sequence
+  mode: single
+- id: '1675440648635'
+  alias: ma_hydrobag_pump_controller
+  description: ''
+  trigger:
+  - platform: time_pattern
+    seconds: /1
+  - platform: state
+    entity_id:
+    - input_boolean.ma_hydrobag_pump_enabled
+  - platform: state
+    entity_id:
+    - input_boolean.ma_hydrobag_pump_active
+  - platform: state
+    entity_id:
+    - schedule.ma_hydrobag_pump_schedule
+  condition: []
+  action:
+  - if:
+    - condition: state
+      entity_id: input_boolean.ma_hydrobag_pump_enabled
+      state: 'on'
+    - condition: state
+      entity_id: input_boolean.ma_hydrobag_pump_active
+      state: 'on'
+    then:
+    - service: switch.turn_on
+      data: {}
+      target:
+        entity_id: switch.ma_shelly_plug04
+    else:
+    - service: switch.turn_off
+      data: {}
+      target:
+        entity_id: switch.ma_shelly_plug04
+    - service: input_boolean.turn_off
+      data: {}
+      target:
+        entity_id: input_boolean.ma_hydrobag_pump_active
+  mode: single
+- id: '1675442974907'
+  alias: ma_hydrobag_light_automation
+  description: ''
+  trigger:
+  - platform: time_pattern
+    seconds: /10
+  - platform: state
+    entity_id:
+    - input_boolean.ma_hydrobag_light_enabled
+  - platform: state
+    entity_id:
+    - input_boolean.ma_hydrobag_light_automation_active
+  condition: []
+  action:
+  - if:
+    - condition: state
+      entity_id: schedule.ma_hydrobag_light_schedule
+      state: 'on'
+    - condition: state
+      entity_id: input_boolean.ma_hydrobag_light_enabled
+      state: 'on'
+    - condition: state
+      entity_id: input_boolean.ma_hydrobag_light_automation_active
+      state: 'on'
+    then:
+    - service: light.turn_on
+      data: {}
+      target:
+        entity_id: light.ma_hydrobag_light_neopixel
+    else:
+    - service: light.turn_off
+      data: {}
+      target:
+        entity_id: light.ma_hydrobag_light_neopixel
+  mode: single
+- id: '1676991129582'
+  description: ''
+  trigger: []
+  condition: []
+  action: []
+  mode: single
+- id: '1676991140328'
+  alias: hydroponics_0101_light_automation
+  description: ''
+  trigger:
+  - platform: time_pattern
+    seconds: /1
+  - platform: state
+    entity_id:
+    - input_boolean.hydroponics_0101_lightautomation_active
+  - platform: state
+    entity_id:
+    - schedule.hydroponics_0101_lightschedule
+  condition: []
+  action:
+  - if:
+    - condition: state
+      entity_id: input_boolean.hydroponics_0101_lightautomation_active
+      state: 'on'
+    - condition: state
+      entity_id: schedule.hydroponics_0101_lightschedule
+      state: 'on'
+    then:
+    - service: switch.turn_on
+      data: {}
+      target:
+        entity_id: switch.hydroponics_shellyplug_0101
+    else:
+    - service: switch.turn_off
+      data: {}
+      target:
+        entity_id: switch.hydroponics_shellyplug_0101
+  mode: single
+- id: '1682515305642'
+  alias: hydroponics_0101_pump_automation
+  description: ''
+  trigger:
+  - platform: time_pattern
+    minutes: /15
+    id: minutes
+  - platform: time_pattern
+    seconds: /1
+    id: trigger_second
+  condition: []
+  action:
+  - if:
+    - condition: trigger
+      id: trigger_second
+    - condition: state
+      entity_id: timer.hydroponics_0101_pumptimer
+      state: active
+    - condition: state
+      entity_id: input_boolean.hydroponics_0101_pumpautomation_active
+      state: 'on'
+    - condition: state
+      entity_id: schedule.hydroponics_0101_pumpschedule
+      state: 'on'
+    then:
+    - service: switch.turn_on
+      data: {}
+      target:
+        entity_id:
+        - switch.hydroponics_controller_0101_pump_1
+        - switch.hydroponics_controller_0101_pump_2
+        - switch.hydroponics_controller_0101_pump_3
+    else:
+    - if:
+      - condition: state
+        entity_id: input_boolean.hydroponics_0101_pumpautomation_active
+        state: 'on'
+      then:
+      - service: switch.turn_off
+        data: {}
+        target:
+          entity_id:
+          - switch.hydroponics_controller_0101_pump_1
+          - switch.hydroponics_controller_0101_pump_2
+          - switch.hydroponics_controller_0101_pump_3
+  - if:
+    - condition: trigger
+      id: minutes
+    then:
+    - service: timer.start
+      data:
+        duration: 00:06:00
+      target:
+        entity_id: timer.hydroponics_0101_pumptimer
+  mode: restart

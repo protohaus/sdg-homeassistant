@@ -83,6 +83,22 @@ input_number:
     max: 99999
     step: 1
     mode: box
+  
+  ma_hydrobag_pump_time_active:
+    name: ma_hydrobag_pump_time_active
+    initial: 1
+    min: 0
+    max: 1440
+    step: 1
+    mode: box
+  
+  ma_hydrobag_pump_time_pause:
+    name: ma_hydrobag_pump_time_pause
+    initial: 1
+    min: 0
+    max: 1440
+    step: 1
+    mode: box
    
 
 #telegram_bot:
@@ -111,7 +127,25 @@ input_boolean:
     
   ma_biolab_mushroomart_automation_active:
     name: ma_biolab_mushroomart_automation_active
-
+    
+  ma_hydrobag_light_automation_active:
+    name: ma_hydrobag_light_automation_active
+  
+  ma_hydrobag_pump_automation_active:
+    name: ma_hydrobag_pump_automation_active
+  
+  ma_hydrobag_pump_enabled:
+    name: ma_hydrobag_pump_enabled
+  
+  ma_hydrobag_light_enabled:
+    name: ma_hydrobag_light_enabled
+  
+  ma_hydrobag_pump_active:
+    name: ma_hydrobag_pump_active
+    
+  ma_microgreens_stack_1_automation_active:
+    name: ma_microgreens_stack_1_automation_active
+  
 timer:
   test:
     duration: "01:30:00"
@@ -163,8 +197,16 @@ input_datetime:
   ma_shelly_plug04_notification_timer_duration:
     name: ma_shelly_plug04_notification_timer_duration
     has_time: true  
-      
     
+  ma_hydrobag_automation_date_start:
+    name: ma_hydrobag_automation_date_start
+    has_date: true   
+  
+  ma_hydrobag_automation_date_end:
+    name: ma_hydrobag_automation_date_end
+    has_date: true  
+
+        
 sensor:
 #####################
 # Integration Sensors
